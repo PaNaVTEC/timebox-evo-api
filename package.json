@@ -1,0 +1,26 @@
+{
+  "name": "simple-timebox-api",
+  "version": "1.0.0",
+  "description": "Simple API to control your timebox",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^13.13.4",
+    "nodemon": "^2.0.3",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "bluetooth-serial-port": "^2.2.7",
+    "express": "^4.17.1",
+    "fp-ts": "^2.5.4",
+    "node-divoom-timebox-evo": "^0.3.0"
+  }
+}
