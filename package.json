@@ -4,7 +4,7 @@
   "description": "Simple API to control your timebox",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "dev": "PORT='8000' TIMEBOX_ADDRESS='11:75:58:5D:C0:11' nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
@@ -21,6 +21,7 @@
     "bluetooth-serial-port": "^2.2.7",
     "express": "^4.17.1",
     "fp-ts": "^2.5.4",
+    "fp-ts-contrib": "^0.1.15",
     "node-divoom-timebox-evo": "^0.3.0"
   }
 }
