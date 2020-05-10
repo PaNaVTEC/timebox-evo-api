@@ -1,4 +1,4 @@
-import {taskEither, TaskEither, bracket, mapLeft} from 'fp-ts/lib/TaskEither'
+import {taskEither, TaskEither, mapLeft} from 'fp-ts/lib/TaskEither'
 import {Do} from 'fp-ts-contrib/lib/Do'
 import {BluetoothSerialPort} from 'bluetooth-serial-port'
 import {

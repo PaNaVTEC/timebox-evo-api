@@ -14,6 +14,7 @@ const _listen = (
   app.listen(port, error =>
     error ? cb({kind: 'ExpressListenError', error}, undefined) : cb(undefined, undefined),
   )
+
 export const listen: (
   app: express.Express,
   port: number,
