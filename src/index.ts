@@ -11,7 +11,7 @@ import { listen, ExpressListenError } from './express_bindings'
 
 type AppError = ParseFailures | ConnectionProblems | ExpressListenError
 
-const createExpressServer = (port : string, btSerial : BluetoothSerialPort) : TaskEither<ExpressListenError, void> =>
+const createExpressServer = (port : number, btSerial : BluetoothSerialPort) : TaskEither<ExpressListenError, void> =>
   listen(express().get('/text', textHandler(btSerial)), port)
 
 const bootupExpress : TaskEither<AppError, void> = Do(taskEither)
