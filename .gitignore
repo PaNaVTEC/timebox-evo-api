@@ -344,3 +344,6 @@ $RECYCLE.BIN/
 *.lnk
 
 
+.tern-project
+.tern-port
+  
