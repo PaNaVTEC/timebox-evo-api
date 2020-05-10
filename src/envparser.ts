@@ -1,9 +1,14 @@
-import { option, fromNullable, getOrElse, Option } from 'fp-ts/lib/Option'
+import { either, Either, fromNullable } from 'fp-ts/lib/Either'
 import { Do } from 'fp-ts-contrib/lib/Do'
 
-export type Env = { port: string, timeboxAddress: string }
+export type Env = { port: NonNullable<string>, timeboxAddress: NonNullable<string> }
 
-export const parseEnv = () : Option<Env> => Do(option)
-  .bindL('port', () => fromNullable(process.env.PORT))
-  .bindL('timeboxAddress', () => fromNullable(process.env.TIMEBOX_ADDRESS))
+export enum ParseFailures {
+  Port,
+  TimeboxAddress
+}
+
+export const parseEnv : Either<ParseFailures, Env> = Do(either)
+  .bindL('port', () => fromNullable(ParseFailures.Port)(process.env.PORT))
+  .bindL('timeboxAddress', () => fromNullable(ParseFailures.TimeboxAddress)(process.env.TIMEBOX_ADDRESS))
   .return(({ port, timeboxAddress }) => ({ port, timeboxAddress }))

@@ -1,29 +1,28 @@
 import express from 'express'
-import { IO, io } from 'fp-ts/lib/IO'
 import { Do } from 'fp-ts-contrib/lib/Do'
-import { fold } from 'fp-ts/lib/Option'
+import { fold, mapLeft, taskEither, fromEither, TaskEither } from 'fp-ts/lib/TaskEither'
+import { task } from 'fp-ts/lib/Task'
+import { BluetoothSerialPort } from 'bluetooth-serial-port'
 
-import { rootHandler } from './handlers'
-import { parseEnv, Env } from './envparser'
+import { textHandler } from './handlers'
+import { parseEnv, ParseFailures } from './envparser'
+import { connectToTimebox, ConnectionProblems } from './divoom/connection'
+import { listen, ExpressListenError } from './express'
 
-const envOrCrash : IO<Env> =
-  fold(
-    () => () => { throw new Error('Please execute the application with the correct arguments') },
-    (env : Env) => io.of(env)
-  )(parseEnv())
+type AppError = ParseFailures | ConnectionProblems | ExpressListenError
 
-const createExpressServer = (env : Env) : IO<void> => () => {
-  const app = express()
-  app.get('/', rootHandler(env.timeboxAddress))
+const createExpressServer = (port : string, btSerial : BluetoothSerialPort) : TaskEither<ExpressListenError, void> =>
+  listen(express().get('/text', textHandler(btSerial)), port)
 
-  app.listen(env.port, (err) => {
-    if (err) return console.error(err)
-    return console.log(`Server is listening on ${env.port}`)
-  });
-}
+const bootupExpress : TaskEither<AppError, void> = Do(taskEither)
+  .bindL('env', () => mapLeft(e => e as AppError)(fromEither(parseEnv)))
+  .bindL('btSerial', ({ env }) => mapLeft(e => e as AppError)(connectToTimebox(env.timeboxAddress)))
+  .doL(({ env, btSerial }) => mapLeft(e => e as AppError)(createExpressServer(env.port, btSerial)))
+  .return(() => {})
 
-(Do(io)
-  .bindL('env', () => envOrCrash)
-  .bindL('', ({ env }) => createExpressServer(env))
-  .done()
-)()
+const app = fold(
+  (err: AppError) => task.of(console.error(`Error booting up application: ${JSON.stringify(err)}`)),
+  () => task.of(console.log('Bootup complete'))
+)(bootupExpress)
+
+app()
