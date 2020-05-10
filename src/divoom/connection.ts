@@ -1,7 +1,7 @@
 import { taskEither, TaskEither, bracket, mapLeft } from 'fp-ts/lib/TaskEither'
 import { Do } from 'fp-ts-contrib/lib/Do'
 import { BluetoothSerialPort } from 'bluetooth-serial-port'
-import { findSerialPortChannel, connect, CantFindDevice, CantConnectDevice } from './bluetooth'
+import { findSerialPortChannel, connect, CantFindDevice, CantConnectDevice } from './bluetooth_bindings'
 
 export type ConnectionProblems = CantConnectDevice | CantFindDevice
 

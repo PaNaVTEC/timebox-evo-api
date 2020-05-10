@@ -3,7 +3,7 @@ import { BluetoothSerialPort } from 'bluetooth-serial-port'
 import { sendText } from './divoom/requests'
 import { fold } from 'fp-ts/lib/TaskEither'
 import { task } from 'fp-ts/lib/Task'
-import { CantWriteBuffer } from './divoom/bluetooth'
+import { CantWriteBuffer } from './divoom/bluetooth_bindings'
 
 type SendTextResponse = { text: string, err?: CantWriteBuffer }
 

@@ -7,7 +7,7 @@ import { BluetoothSerialPort } from 'bluetooth-serial-port'
 import { textHandler } from './handlers'
 import { parseEnv, ParseFailures } from './envparser'
 import { connectToTimebox, ConnectionProblems } from './divoom/connection'
-import { listen, ExpressListenError } from './express'
+import { listen, ExpressListenError } from './express_bindings'
 
 type AppError = ParseFailures | ConnectionProblems | ExpressListenError
 
