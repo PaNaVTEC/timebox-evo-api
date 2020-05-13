@@ -4,7 +4,7 @@ import {fold, mapLeft, taskEither, fromEither, TaskEither} from 'fp-ts/lib/TaskE
 import {task} from 'fp-ts/lib/Task'
 import {BluetoothSerialPort} from 'bluetooth-serial-port'
 
-import {textHandler} from './handlers'
+import {handlers} from './handlers/index'
 import {parseEnv, ParseFailures} from './envparser'
 import {connectToTimebox, ConnectionProblems} from './divoom/connection'
 import {listen, ExpressListenError} from './express_bindings'
@@ -15,7 +15,7 @@ const createExpressServer = (
   port: number,
   btSerial: BluetoothSerialPort,
 ): TaskEither<ExpressListenError, void> =>
-  listen(express().get('/text', textHandler(btSerial)), port)
+  listen(handlers(express(), btSerial), port)
 
 const withFailure = mapLeft(e => e as AppError)
 
