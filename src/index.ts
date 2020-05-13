@@ -4,7 +4,7 @@ import {fold, mapLeft, taskEither, fromEither, TaskEither} from 'fp-ts/lib/TaskE
 import {task} from 'fp-ts/lib/Task'
 import {BluetoothSerialPort} from 'bluetooth-serial-port'
 
-import {handlers} from './handlers/index'
+import {handlers} from './handlers'
 import {parseEnv, ParseFailures} from './envparser'
 import {connectToTimebox, ConnectionProblems} from './divoom/connection'
 import {listen, ExpressListenError} from './express_bindings'
