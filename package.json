@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "bluetooth-serial-port": "^2.2.7",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fp-ts": "^2.5.4",
     "fp-ts-contrib": "^0.1.15",
     "node-divoom-timebox-evo": "^0.3.0",
